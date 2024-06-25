@@ -38,7 +38,7 @@ def _get_version():
         raise ValueError('`__version__` not defined in `deepchem/__init__.py`')
 
 
-setup(name='deepchem',
+setup(name='deepchem_for_ichem',
       version=_get_version(),
       url='https://github.com/deepchem/deepchem',
       maintainer='DeepChem contributors',
