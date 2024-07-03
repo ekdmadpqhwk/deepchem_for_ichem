@@ -9,7 +9,8 @@ def one_hot_encode():
     ''' One hot encoder for IChem defined interaction atom types
     '''
 
-def IPA_map_to_mol(base_directory, mol2_file_name):
+# This needs to be in my scripts (ppi-project/utils directory)
+def IPA_map_to_mol(base_directory, pose_id):
     ''' Get custom rdkit mol object from reading and parsing IPA maps in mol2 filetype
 
     Steps
@@ -26,7 +27,7 @@ def IPA_map_to_mol(base_directory, mol2_file_name):
 
     Parameters
     ----------
-    multimol2_file_name: 
+    pose_id: AAAABBBB_1 
 
     Returns
     -------
@@ -36,5 +37,8 @@ def IPA_map_to_mol(base_directory, mol2_file_name):
 
     # base directory = '/home/spark211/scratch/feature_extraction/gnina_features/IPA_maps/crossdocked'
 
-    file_path = 
+    file_path = Path(base_directory) / (pose_id[4:8] + '.mol2') # IPA_maps/crossdocked/AAAA.mol2
+    
+
+    
     
