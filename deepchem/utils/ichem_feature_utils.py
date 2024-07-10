@@ -1,43 +1,38 @@
 """
-Utilities for parsing IChem generated IPA (interaction pseudoatom) maps.
+Utilities for ichem related stuff
 """
 
-from pathlib import Path
-import subprocess
+from deepchem.utils.molecule_feature_utils import one_hot_encode
 
-def one_hot_encode():
-    ''' One hot encoder for IChem defined interaction atom types
-    '''
-
-# This needs to be in my scripts (ppi-project/utils directory)
-def IPA_map_to_mol(base_directory, pose_id):
-    ''' Get custom rdkit mol object from reading and parsing IPA maps in mol2 filetype
-
-    Steps
-    -----
-    1. Parse mol2_file_name to get multimol2 file location (last 4 PDB_ID.mol2)
-    2. Create a temporary .mol2 file containing by parsing through the multimol2 file and
-       saving only the mol2 file of interest (matching mol2_file_name)
-    3. Execute a shell script to parse through mol2 file and get a dictionary of atom index and residue name
-       ex. atom_dict = {0: 'ALL2', 1: 'ALP2', 32: 'ALC2'}
-    3. Read in mol2 file as RDKitMol object and process it according to dictionary
-       (1) if the atom is a center atom, remove it
-       (2) if the atom is protein/ligand, add a "Residue" property
- 
+def is_ligand_one_hot(atom: RDKitAtom,
+                          allowable_set: List[str],
+                          include_unknown_set: bool = True) -> List[float]:
+    """Get an one-hot feature of an atom type.
 
     Parameters
-    ----------
-    pose_id: AAAABBBB_1 
+    ---------
+    atom: rdkit.Chem.rdchem.Atom
+        RDKit atom object
+    allowable_set: List[str]
+        The atom types to consider. The default set is
+        `[ "L", "P" ]` corresponding to ligand and protein atom
+    include_unknown_set: bool, default True
+        If true, the index of all atom not in `allowable_set` is `len(allowable_set)`.
 
     Returns
     -------
-    RDKitMol
-       processed rdkit mol object to be featurized 
-    '''
+    List[float]
+        An one-hot vector of atom types.
+        If `include_unknown_set` is False, the length is `len(allowable_set)`.
+        If `include_unknown_set` is True, the length is `len(allowable_set) + 1`.
+    """
 
-    # base directory = '/home/spark211/scratch/feature_extraction/gnina_features/IPA_maps/crossdocked'
-
-    file_path = Path(base_directory) / (pose_id[4:8] + '.mol2') # IPA_maps/crossdocked/AAAA.mol2
+    # add assert code to check atom HasProp('Residue')
+    # add assert code to check atom GetProp is either 'L' or 'P'
+    
+    atom_type = atom.GetProp('Residue')[2]
+    
+    return one_hot_encode(atom_type, allowable_set, include_unknown_set)
     
 
     

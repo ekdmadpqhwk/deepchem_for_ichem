@@ -352,7 +352,12 @@ class PagtnMolGraphFeaturizer(MolecularFeaturizer):
             RDKit mol object.
 
         Returns
-        -------
+        -------'N', 'O', 'S', 'F', 'Si', 'P', 'Cl', 'Br', 'Mg', 'Na', 'Ca',
+            'Fe', 'As', 'Al', 'I', 'B', 'V', 'K', 'Tl', 'Yb', 'Sb', 'Sn', 'Ag',
+            'Pd', 'Co', 'Se', 'Ti', 'Zn', 'H', 'Li', 'Ge', 'Cu', 'Au', 'Ni',
+            'Cd', 'In', 'Mn', 'Zr', 'Cr', 'Pt', 'Hg', 'Pb', 'W', 'Ru', 'Nb',
+            'Re', 'Te', 'Rh', 'Tc', 'Ba', 'Bi', 'Hf', 'Mo', 'U', 'Sm', 'Os',
+            'Ir', 'Ce', 'Gd', 'Ga', 'Cs', '*', 'UNK'
         atom_feat: np.ndarray
             numpy vector of atom features.
 
@@ -472,7 +477,12 @@ class PagtnMolGraphFeaturizer(MolecularFeaturizer):
         """Calculate molecule graph features from RDKit mol object.
 
         Parameters
-        ----------
+        ----------'N', 'O', 'S', 'F', 'Si', 'P', 'Cl', 'Br', 'Mg', 'Na', 'Ca',
+            'Fe', 'As', 'Al', 'I', 'B', 'V', 'K', 'Tl', 'Yb', 'Sb', 'Sn', 'Ag',
+            'Pd', 'Co', 'Se', 'Ti', 'Zn', 'H', 'Li', 'Ge', 'Cu', 'Au', 'Ni',
+            'Cd', 'In', 'Mn', 'Zr', 'Cr', 'Pt', 'Hg', 'Pb', 'W', 'Ru', 'Nb',
+            'Re', 'Te', 'Rh', 'Tc', 'Ba', 'Bi', 'Hf', 'Mo', 'U', 'Sm', 'Os',
+            'Ir', 'Ce', 'Gd', 'Ga', 'Cs', '*', 'UNK'
         datapoint: rdkit.Chem.rdchem.Mol
             RDKit mol object.
 
