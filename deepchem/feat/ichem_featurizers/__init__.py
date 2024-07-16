@@ -1,1 +1,1 @@
-from deepchem.feat.ichem_featurizers.IPA_map_featurizer_1 import IPAMapFeaturizer
+from deepchem.feat.ichem_featurizers.IPA_map_featurizers import IPAMapFeaturizer1

@@ -66,3 +66,4 @@ class IPAMapFeaturizer1(Featurizer):
 
     def _edge_features(self, mol: RDKitMol) -> np.ndarray:
         
+        
