@@ -2,6 +2,7 @@
 Utilities for ichem related stuff
 """
 from deepchem.utils.typing import RDKitAtom, RDKitBond, RDKitMol
+from typing import List, Union, Tuple
 
 from deepchem.utils.molecule_feature_utils import one_hot_encode
 
