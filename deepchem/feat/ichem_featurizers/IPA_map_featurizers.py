@@ -114,7 +114,7 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
                     dest_idxs.append(idx_begin + j)
                     dists.append(prot_dist_mat[i][j])
 
-        return np.array([src_idxs, dest_idxs], dtype=int), np.array(dists, dtype=float)
+        return np.array([src_idxs, dest_idxs], dtype=int), np.expand_dims(dists, axis=1)
 
     def _featurize(self, datapoint: RDKitMol, **kwargs) -> GraphData:
         """Calculate molecule graph features from RDKit mol object.
