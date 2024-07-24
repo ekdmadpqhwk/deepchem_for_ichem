@@ -6,6 +6,15 @@ from typing import List, Union, Tuple
 
 from deepchem.utils.molecule_feature_utils import one_hot_encode
 
+def get_tripos_atom_type_one_hot(mol: RDKitMol,
+                                      idx: int,
+                                      allowable_set: List[str] = DEFAULT_ATOM_TYPE_SET,
+                                      include_unknown_set: bool = True) -> List[float]:
+    """ Get an one-hot-encode of tripos atom types
+    """
+
+    return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('_TriposAtomName'), allowable_set, include_unknown_set)
+
 def is_ligand_one_hot(atom: RDKitAtom,
                           allowable_set: List[str],
                           include_unknown_set: bool = True) -> List[float]:
