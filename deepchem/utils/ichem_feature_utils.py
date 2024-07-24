@@ -1,6 +1,7 @@
 """
 Utilities for ichem related stuff
 """
+from deepchem.utils.typing import RDKitAtom, RDKitBond, RDKitMol
 
 from deepchem.utils.molecule_feature_utils import one_hot_encode
 
