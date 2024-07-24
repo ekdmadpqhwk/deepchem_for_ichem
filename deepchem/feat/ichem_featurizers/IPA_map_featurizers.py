@@ -44,9 +44,9 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
 
         self.TYPES = [ 'L', 'P' ]
         
-    def _atom_featurizer(self, atom: RDKitAtom, idx) -> np.ndarray:
+    def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx) -> np.ndarray:
 
-        atom_symbol = get_tripos_atom_type_one_hot(atom, idx, self.SYMBOLS, False)
+        atom_symbol = get_tripos_atom_type_one_hot(mol, idx, self.SYMBOLS, False)
         
         atom_type = is_ligand_one_hot(atom, self.TYPES, False)
         
@@ -137,7 +137,7 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
             )
 
         node_features = np.asarray([
-            self._atom_featurizer(atom, i) for i, atom in enumerate(datapoint.GetAtoms())
+            self._atom_featurizer(atom, mol, i) for i, atom in enumerate(datapoint.GetAtoms())
         ],
                                    dtype=float)
         edge_index, edge_features = self._edge_featurizer(datapoint)
