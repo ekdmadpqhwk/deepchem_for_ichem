@@ -3,7 +3,7 @@ import numpy as np
 from deepchem.utils.typing import RDKitAtom, RDKitBond, RDKitMol
 from deepchem.feat.graph_data import GraphData
 
-from deepchem.feat.base_classes import UserDefinedFeaturizer
+from deepchem.feat.base_classes import Featurizer
 from deepchem.utils.molecule_feature_utils import get_atom_type_one_hot
 from deepchem.utils.geometry_utils import compute_pairwise_distances
 
