@@ -116,7 +116,7 @@ class IPAMapFeaturizer1(Featurizer):
 
         return np.array([src_idxs, dest_idxs], dtype=int), np.array(dists, dtype=float)
 
-    def _featurize(self, mol: RDKitMol, **kwargs) -> GraphData:
+    def _featurize(self, datapoint: RDKitMol, **kwargs) -> GraphData:
         """Calculate molecule graph features from RDKit mol object.
 
         Parameters
@@ -137,9 +137,9 @@ class IPAMapFeaturizer1(Featurizer):
             )
 
         node_features = np.asarray([
-            self._atom_featurizer(atom) for atom in mol.GetAtoms()
+            self._atom_featurizer(atom) for atom in datapoint.GetAtoms()
         ],
                                    dtype=float)
-        edge_index, edge_features = self._edge_featurizer(mol)
+        edge_index, edge_features = self._edge_featurizer(datapoint)
         graph = GraphData(node_features, edge_index, edge_features)
         return graph
