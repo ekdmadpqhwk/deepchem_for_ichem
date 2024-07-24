@@ -8,7 +8,7 @@ from deepchem.utils.molecule_feature_utils import one_hot_encode
 
 def get_tripos_atom_type_one_hot(mol: RDKitMol,
                                       idx: int,
-                                      allowable_set: List[str] = DEFAULT_ATOM_TYPE_SET,
+                                      allowable_set: List[str],
                                       include_unknown_set: bool = True) -> List[float]:
     """ Get an one-hot-encode of tripos atom types
     """
