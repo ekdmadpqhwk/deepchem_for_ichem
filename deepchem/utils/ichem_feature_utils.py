@@ -33,7 +33,3 @@ def is_ligand_one_hot(atom: RDKitAtom,
     atom_type = atom.GetProp('Residue')[2]
     
     return one_hot_encode(atom_type, allowable_set, include_unknown_set)
-    
-
-    
-    
