@@ -137,7 +137,7 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
             )
 
         node_features = np.asarray([
-            self._atom_featurizer(atom, mol, i) for i, atom in enumerate(datapoint.GetAtoms())
+            self._atom_featurizer(atom, datapoint, i) for i, atom in enumerate(datapoint.GetAtoms())
         ],
                                    dtype=float)
         edge_index, edge_features = self._edge_featurizer(datapoint)
