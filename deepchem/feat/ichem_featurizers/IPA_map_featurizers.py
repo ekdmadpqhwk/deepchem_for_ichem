@@ -101,8 +101,8 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
         for i in range(lig_dist_mat.shape[0]):
             for j in range(i+1, lig_dist_mat.shape[0]):
                 if (lig_dist_mat[i, j] < 4):
-                    src_idxs.append(i+1)
-                    dest_idxs.append(j+1)
+                    src_idxs.append(i)
+                    dest_idxs.append(j)
                     dists.append(lig_dist_mat[i][j])
 
         # protein atom indexes start after ligand
@@ -110,8 +110,8 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
         for i in range(prot_dist_mat.shape[0]):
             for j in range(i+1, prot_dist_mat.shape[0]):
                 if (prot_dist_mat[i, j] < 4):
-                    src_idxs.append(idx_begin + i+1)
-                    dest_idxs.append(idx_begin + j+1)
+                    src_idxs.append(idx_begin + i)
+                    dest_idxs.append(idx_begin + j)
                     dists.append(prot_dist_mat[i][j])
 
         return np.array([src_idxs, dest_idxs], dtype=int), np.array(dists, dtype=float)
