@@ -99,8 +99,8 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
         
         # start from ligand atom index of 1 (how mol2 file should start)
         for i in range(lig_dist_mat.shape[0]):
-            for j in range(i+1, lig_dist_mat.shape[0]):
-                if (lig_dist_mat[i, j] < 4):
+            for j in range(lig_dist_mat.shape[0]):
+                if (lig_dist_mat[i, j] < 4) and (i != j):
                     src_idxs.append(i)
                     dest_idxs.append(j)
                     dists.append(lig_dist_mat[i][j])
@@ -108,8 +108,8 @@ class IPAMapFeaturizer1(MolecularFeaturizer):
         # protein atom indexes start after ligand
         idx_begin = lig_dist_mat.shape[0]
         for i in range(prot_dist_mat.shape[0]):
-            for j in range(i+1, prot_dist_mat.shape[0]):
-                if (prot_dist_mat[i, j] < 4):
+            for j in range(prot_dist_mat.shape[0]):
+                if (prot_dist_mat[i, j] < 4) and (i != j):
                     src_idxs.append(idx_begin + i)
                     dest_idxs.append(idx_begin + j)
                     dists.append(prot_dist_mat[i][j])
