@@ -15,6 +15,15 @@ def get_tripos_atom_type_one_hot(mol: RDKitMol,
 
     return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('_TriposAtomName'), allowable_set, include_unknown_set)
 
+def get_normal_atom_type_one_hot(mol: RDKitMol,
+                                      idx: int,
+                                      allowable_set: List[str],
+                                      include_unknown_set: bool = True) -> List[float]:
+    """ Get an one-hot-encode of tripos atom types
+    """
+
+    return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('Atype'), allowable_set, include_unknown_set)
+    
 def is_ligand_one_hot(atom: RDKitAtom,
                           allowable_set: List[str],
                           include_unknown_set: bool = True) -> List[float]:
@@ -26,7 +35,7 @@ def is_ligand_one_hot(atom: RDKitAtom,
         RDKit atom object
     allowable_set: List[str]
         The atom types to consider. The default set is
-        `[ "L", "P" ]` corresponding to ligand and protein atom
+        `[ "L", "P", "C" ]` corresponding to ligand, protein and pseudo atom
     include_unknown_set: bool, default True
         If true, the index of all atom not in `allowable_set` is `len(allowable_set)`.
 
