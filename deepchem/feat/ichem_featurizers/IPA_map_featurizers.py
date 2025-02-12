@@ -99,7 +99,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
     def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx) -> np.ndarray:
 
         int_symbol = get_int_atom_type_one_hot(mol, idx, self.INT_SYMBOLS, False)
-        node_type = get_node_type_one_hot(atom, self.ATM_TYPES, False)
+        node_type = get_node_type_one_hot(atom, self.ATOM_TYPES, False)
         
         if (not self.use_atom_symbols) & (not self.use_BSA):
         
