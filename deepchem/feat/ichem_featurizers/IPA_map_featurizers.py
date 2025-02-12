@@ -96,7 +96,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             '''
             return None
         
-    def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx, use_atom_symbols, use_center_atoms) -> np.ndarray:
+    def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx) -> np.ndarray:
 
         int_symbol = get_int_atom_type_one_hot(mol, idx, self.INT_SYMBOLS, False)
         node_type = get_node_type_one_hot(atom, self.ATM_TYPES, False)
@@ -122,7 +122,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
 
             return atom_feat
 
-    def _edge_featurizer(self, mol: RDKitMol, use_center_atoms) -> np.ndarray:
+    def _edge_featurizer(self, mol: RDKitMol) -> np.ndarray:
         
         ''' Compute edge index and features within the same molecule (protein or ligand).
         !!! Still need to implement adding covalent-noncovalent one-hot
