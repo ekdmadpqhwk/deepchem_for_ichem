@@ -21,7 +21,7 @@ from deepchem.feat.graph_data import GraphData
 from deepchem.feat.binding_pocket_features import BindingPocketFeaturizer
 
 # ichem featurizers
-from deepchem.feat.ichem_featurizers import IPAMapFeaturizer1
+from deepchem.feat.ichem_featurizers import IPAMapFeaturizer
 
 # molecule featurizers
 from deepchem.feat.molecule_featurizers import AtomicCoordinates
