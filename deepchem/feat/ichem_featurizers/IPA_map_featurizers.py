@@ -32,7 +32,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
     This class requires RDKit to be installed.
     
     '''
-    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type):
+    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False):
 
         """
         Parameters
