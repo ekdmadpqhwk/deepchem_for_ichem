@@ -6,8 +6,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from deepchem.utils.ichem_feature_utils import is_ligand_one_hot
-from deepchem.utils.ichem_feature_utils import get_tripos_atom_type_one_hot
+from deepchem.utils.ichem_feature_utils import get_int_atom_type_one_hot
+from deepchem.utils.ichem_feature_utils import get_atom_symbol_one_hot
+from deepchem.utils.ichem_feature_utils import get_BSA
+from deepchem.utils.ichem_feature_utils import get_node_type_one_hot
 
 from deepchem.utils.misc_utils import indent
 from deepchem.utils.misc_utils import shape2str

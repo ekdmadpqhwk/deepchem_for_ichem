@@ -6,7 +6,7 @@ from typing import List, Union, Tuple
 
 from deepchem.utils.molecule_feature_utils import one_hot_encode
 
-def get_tripos_atom_type_one_hot(mol: RDKitMol,
+def get_int_atom_type_one_hot(mol: RDKitMol,
                                       idx: int,
                                       allowable_set: List[str],
                                       include_unknown_set: bool = True) -> List[float]:
@@ -15,16 +15,22 @@ def get_tripos_atom_type_one_hot(mol: RDKitMol,
 
     return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('_TriposAtomName'), allowable_set, include_unknown_set)
 
-def get_normal_atom_type_one_hot(mol: RDKitMol,
+def get_atom_symbol_one_hot(mol: RDKitMol,
                                       idx: int,
                                       allowable_set: List[str],
                                       include_unknown_set: bool = True) -> List[float]:
     """ Get an one-hot-encode of tripos atom types
     """
 
-    return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('Atype'), allowable_set, include_unknown_set)
+    return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('Atom_symbol'), allowable_set, include_unknown_set)
+
+def get_BSA(mol: RDKitMol, idx: int):
+    """ Get an one-hot-encode of tripos atom types
+    """
+
+    return mol.GetAtomWithIdx(idx).GetProp('BSA')
     
-def is_ligand_one_hot(atom: RDKitAtom,
+def get_node_type_one_hot(atom: RDKitAtom,
                           allowable_set: List[str],
                           include_unknown_set: bool = True) -> List[float]:
     """Get an one-hot feature of an atom type.
