@@ -92,8 +92,8 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             return lig_dist_mat, prot_dist_mat
             
         else:
-        ''' Unimplemented - for C-C, L-C, P-C distances
-        '''
+            '''Unimplemented for using center atoms
+            '''
             return None
         
     def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx, use_atom_symbols, use_center_atoms) -> np.ndarray:
