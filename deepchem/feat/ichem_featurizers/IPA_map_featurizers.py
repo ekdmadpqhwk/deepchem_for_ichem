@@ -62,7 +62,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         if use_atom_symbols:
             self.ATOM_TYPES = ["C", "N", "O", "F", "P", "S", "Cl", "Br", "I"]
 
-    def _calculate_dist_between_atoms(mol: RDKitMol, use_center_atoms) -> np.ndarray:
+    def _calculate_dist_between_atoms(mol: RDKitMol) -> np.ndarray:
         ''' Compute distances between all ligand atoms and all protein atoms
         '''
         
@@ -70,7 +70,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         conformer = mol.GetConformer(0)
 
         # Calculate distances between L-L and P-P
-        if not use_center_atoms:
+        if not self.use_center_atoms:
             
             # Initialize arrays to store coordinates for both ligand and protein atoms
             lig_atoms_coords = []
@@ -90,11 +90,11 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             prot_dist_mat = compute_pairwise_distances(np.array(prot_atoms_coords), np.array(prot_atoms_coords))
         
             return lig_dist_mat, prot_dist_mat
-
+            
+        else:
         ''' Unimplemented - for C-C, L-C, P-C distances
         '''
-        else:
-            return
+            return None
         
     def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx, use_atom_symbols, use_center_atoms) -> np.ndarray:
 
