@@ -49,6 +49,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         
         self.edge_cutoff = edge_cutoff
         self.use_atom_symbols = use_atom_symbols
+        self.use_BSA = use_BSA
         self.use_center_atoms = use_center_atoms
         self.use_bond_type = use_bond_type
 
