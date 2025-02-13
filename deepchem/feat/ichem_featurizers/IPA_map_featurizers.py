@@ -100,7 +100,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
     def _atom_featurizer(self, atom: RDKitAtom, mol: RDKitMol, idx) -> np.ndarray:
 
         int_symbol = get_int_atom_type_one_hot(mol, idx, self.INT_SYMBOLS, False)
-        node_type = get_node_type_one_hot(atom, self.ATOM_TYPES, False)
+        node_type = get_node_type_one_hot(atom, self.NODE_TYPES, False)
         
         if (not self.use_atom_symbols) & (not self.use_BSA):
         
@@ -117,7 +117,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         else:
 
             atom_symbol = get_atom_symbol_one_hot(mol, idx, self.ATOM_TYPES, True)
-            atom_bsa = get_BSA(mol, idx)
+            atom_bsa = np.array([get_BSA(mol, idx)])
             
             atom_feat = np.concatenate([int_symbol, atom_symbol, node_type, atom_bsa])
 
@@ -132,7 +132,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         if not self.use_center_atoms:
                 
             # Compute matrix 
-            lig_dist_mat, prot_dist_mat = _calculate_dist_between_atoms(mol)
+            lig_dist_mat, prot_dist_mat = self._calculate_dist_between_atoms(mol)
             
             # Loop through matrix and get edge_index and edge_features for both protein and ligand atoms
     
