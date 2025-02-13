@@ -156,6 +156,9 @@ class IPAMapFeaturizer(MolecularFeaturizer):
                         src_idxs.append(idx_begin + i)
                         dest_idxs.append(idx_begin + j)
                         dists.append(prot_dist_mat[i][j])
+
+            print(src_idxs)
+            print(dest_idxs)
     
             return np.array([src_idxs, dest_idxs], dtype=int), np.expand_dims(dists, axis=1)
             
