@@ -114,6 +114,14 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             atom_feat = np.concatenate([int_symbol, atom_symbol, node_type])
 
             return atom_feat
+
+        elif (not self.use_atom_symbols) & (self.use_BSA):
+
+            atom_bsa = np.array([get_BSA(mol, idx)])
+
+            atom_feat = np.concatenate([int_symbol, node_type, atom_bsa])
+
+            return atom_feat
         else:
 
             atom_symbol = get_atom_symbol_one_hot(mol, idx, self.ATOM_TYPES, True)
@@ -156,9 +164,6 @@ class IPAMapFeaturizer(MolecularFeaturizer):
                         src_idxs.append(idx_begin + i)
                         dest_idxs.append(idx_begin + j)
                         dists.append(prot_dist_mat[i][j])
-
-            print(src_idxs)
-            print(dest_idxs)
     
             return np.array([src_idxs, dest_idxs], dtype=int), np.expand_dims(dists, axis=1)
             
