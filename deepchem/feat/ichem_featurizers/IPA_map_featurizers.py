@@ -63,7 +63,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         if use_atom_symbols:
             self.ATOM_TYPES = ["C", "N", "O", "F", "P", "S", "Cl", "Br", "I"]
 
-    def _calculate_dist_between_atoms(mol: RDKitMol) -> np.ndarray:
+    def _calculate_dist_between_atoms(self, mol: RDKitMol) -> np.ndarray:
         ''' Compute distances between all ligand atoms and all protein atoms
         '''
         
