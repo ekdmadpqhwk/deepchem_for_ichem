@@ -44,6 +44,9 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         use_atom_symbols: boolean
             Extend node features to include actual atom symbols (in addition to interaction atom symbols) defined by RDkit with
             the default set of '`["C", "N", "O", "F", "P", "S", "Cl", "Br", "I"]`'.
+
+        use_bond_type: boolean
+            Extend bond features to explicitly specify covalent ('C') or noncovalent ('NC') bond types
             
         """
         
@@ -62,6 +65,9 @@ class IPAMapFeaturizer(MolecularFeaturizer):
 
         if use_atom_symbols:
             self.ATOM_TYPES = ["C", "N", "O", "F", "P", "S", "Cl", "Br", "I"]
+
+        if use_bond_type:
+            self.BOND_TYPES = ['C', 'NC']
 
     def _calculate_dist_between_atoms(self, mol: RDKitMol) -> np.ndarray:
         ''' Compute distances between all ligand atoms and all protein atoms
@@ -136,37 +142,39 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         ''' Compute edge index and features within the same molecule (protein or ligand).
         !!! Still need to implement adding covalent-noncovalent one-hot
         '''
+        # Compute matrix 
+        lig_dist_mat, prot_dist_mat = self._calculate_dist_between_atoms(mol)
+        
+        # Loop through matrix and get edge_index and edge_features for both protein and ligand atoms
 
-        if not self.use_center_atoms:
-                
-            # Compute matrix 
-            lig_dist_mat, prot_dist_mat = self._calculate_dist_between_atoms(mol)
-            
-            # Loop through matrix and get edge_index and edge_features for both protein and ligand atoms
-    
-            src_idxs = []
-            dest_idxs = []
-            dists = []
-            
-            # start from ligand atom index of 1 (how mol2 file should start)
-            for i in range(lig_dist_mat.shape[0]):
-                for j in range(lig_dist_mat.shape[0]):
-                    if (lig_dist_mat[i, j] < self.edge_cutoff) and (i != j):
-                        src_idxs.append(i)
-                        dest_idxs.append(j)
-                        dists.append(lig_dist_mat[i][j])
-    
-            # protein atom indexes start after ligand
-            idx_begin = lig_dist_mat.shape[0]
-            for i in range(prot_dist_mat.shape[0]):
-                for j in range(prot_dist_mat.shape[0]):
-                    if (prot_dist_mat[i, j] < self.edge_cutoff) and (i != j):
-                        src_idxs.append(idx_begin + i)
-                        dest_idxs.append(idx_begin + j)
-                        dists.append(prot_dist_mat[i][j])
+        src_idxs = []
+        dest_idxs = []
+        dists = []
+        
+        # start from ligand atom index of 1 (how mol2 file should start)
+        for i in range(lig_dist_mat.shape[0]):
+            for j in range(lig_dist_mat.shape[0]):
+                if (lig_dist_mat[i, j] < self.edge_cutoff) and (i != j):
+                    src_idxs.append(i)
+                    dest_idxs.append(j)
+                    dists.append(lig_dist_mat[i][j])
+
+        # protein atom indexes start after ligand
+        idx_begin = lig_dist_mat.shape[0]
+        for i in range(prot_dist_mat.shape[0]):
+            for j in range(prot_dist_mat.shape[0]):
+                if (prot_dist_mat[i, j] < self.edge_cutoff) and (i != j):
+                    src_idxs.append(idx_begin + i)
+                    dest_idxs.append(idx_begin + j)
+                    dists.append(prot_dist_mat[i][j])
+                        
+        if (not self.use_center_atoms) & (not self.use_bond_type):
     
             return np.array([src_idxs, dest_idxs], dtype=int), np.expand_dims(dists, axis=1)
             
+        elif (not self.use_center_atoms) & (self.use_bond_type):
+
+            edge_feat = 
         else:
             ''' Unimplemented
             '''
