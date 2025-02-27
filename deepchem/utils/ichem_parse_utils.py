@@ -3,11 +3,13 @@ Utilities for parsing and extracting information regarding ligand-protein intera
 """
 
 import numpy as np
+import pandas as pd
 import re
 import os
 import mmap
 import ast
 
+from pathlib import Path
 import logging
 import sys
 
