@@ -151,7 +151,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             return int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict
     
     
-    def _modify_rdkit_mol(self, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict)
+    def _modify_rdkit_mol(self, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict):
         ''' Modify rdkit mol object for ease of graph generation given interaction and atom information
         '''
         rdkit_mol = modify_rdkit_mol(self.mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, 
