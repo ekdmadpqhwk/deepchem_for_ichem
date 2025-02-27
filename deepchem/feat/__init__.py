@@ -22,6 +22,7 @@ from deepchem.feat.binding_pocket_features import BindingPocketFeaturizer
 
 # ichem featurizers
 from deepchem.feat.ichem_featurizers import IPAMapFeaturizer
+from deepchem.feat.ichem_featurizers import old_IPAMapFeaturizer
 
 # molecule featurizers
 from deepchem.feat.molecule_featurizers import AtomicCoordinates

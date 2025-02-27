@@ -1,5 +1,5 @@
 """
-Utilities for ichem related stuff
+Utilities for featurizing iChem-generated interaction pseudoatom maps from protein-ligand pocket
 """
 from deepchem.utils.typing import RDKitAtom, RDKitBond, RDKitMol
 from typing import List, Union, Tuple

@@ -11,6 +11,11 @@ from deepchem.utils.ichem_feature_utils import get_atom_symbol_one_hot
 from deepchem.utils.ichem_feature_utils import get_BSA
 from deepchem.utils.ichem_feature_utils import get_node_type_one_hot
 
+from deepchem.utils.ichem_parse_utils import parse_multimol2
+from deepchem.utils.ichem_parse_utils import extract_int_info
+from deepchem.utils.ichem_parse_utils import extract_atom_info
+from deepchem.utils.ichem_parse_utils import modify_rdkit_mol
+
 from deepchem.utils.misc_utils import indent
 from deepchem.utils.misc_utils import shape2str
 from deepchem.utils.misc_utils import UnimplementedError
