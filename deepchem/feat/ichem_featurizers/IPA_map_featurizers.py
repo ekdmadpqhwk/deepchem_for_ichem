@@ -277,7 +277,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
 
             return  np.expand_dims(bond_feat, axis=1)
             
-        else self.use_bond_type:
+        else:
             # Unimplented
             return None
         
