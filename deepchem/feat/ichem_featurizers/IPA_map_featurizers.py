@@ -8,7 +8,7 @@ import sys
 from deepchem.utils.typing import RDKitAtom, RDKitBond, RDKitMol
 from deepchem.feat.graph_data import GraphData
 
-from deepchem.feat.base_classes import MolecularFeaturizer
+from deepchem.feat.base_classes import Featurizer
 from deepchem.utils.geometry_utils import compute_pairwise_distances
 from deepchem.utils.ichem_parse_utils import parse_multimol2, extract_int_info, extract_atom_info, modify_rdkit_mol
 from deepchem.utils.ichem_feature_utils import get_int_atom_type_one_hot, get_atom_symbol_one_hot, get_node_type_one_hot, get_BSA 
