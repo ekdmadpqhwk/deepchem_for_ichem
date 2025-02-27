@@ -46,7 +46,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
     This class requires RDKit to be installed.
     
     '''
-    def __init__(self, multimol_file_path, pose_id, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False):
+    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False):
 
         """
         Parameters
@@ -67,9 +67,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             Extend bond features to explicitly specify covalent ('C') or noncovalent ('NC') bond types
             
         """
-
-        self.multimol_file_path = multimol_file_path
-        self.pose_id = pose_id
+        
         self.edge_cutoff = edge_cutoff
         self.use_atom_symbols = use_atom_symbols
         self.use_BSA = use_BSA
@@ -89,7 +87,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         if use_bond_type:
             self.BOND_TYPES = ['C', 'NC']
             
-    def _get_IPA_map_filepath(self):
+    def _get_IPA_map_filepath(self, multimol2_file_path, pose_id):
         ''' Customizable function that returns the file path for interaction pseudo-atom (IPA) map (.mol2) to be featurized
     
             Input:
@@ -106,14 +104,14 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         '''
         
         # Create a temporary dir to store extracted mol2 file
-        temp_dir = Path(self.multimol2_file_path).parent / 'temp'
+        temp_dir = Path(multimol2_file_path).parent / 'temp'
         temp_dir.mkdir(parents=True, exist_ok=True)
     
         # Parse multimol2 file and extract mol2 file of given pose_id and save it in temp dir
-        parse_multimol2(self.multimol2_file_path, self.pose_id)
+        parse_multimol2(multimol2_file_path, pose_id)
     
         # Define path to the mol2 file in temp dir
-        mol2_file_path = temp_dir / (self.pose_id + ".mol2")
+        mol2_file_path = temp_dir / (pose_id + ".mol2")
     
         # Check if the file is successfully created
         if mol2_file_path.exists():  
@@ -186,7 +184,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             
         except Exception as e:
             logger.error(
-                "Failed to calculate distance matrix for pose: %s" %self.pose_id 
+                "Failed to calculate distance matrix for pose: %s" % pose_id 
             )
             logger.error(
                 "Exception message: %s" % e
@@ -226,7 +224,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             
         except Exception as e:
             logger.error(
-                "Failed to prune nodes for pose: %s" %self.pose_id 
+                "Failed to prune nodes for pose: %s" % pose_id 
             )
             logger.error(
                 "Exception message: %s" % e
@@ -350,7 +348,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         
         return edge_index, edge_features
 
-    def _featurize(self, **kwargs) -> GraphData:
+    def _featurize(self, multimol2_file_path, pose_id) -> GraphData:
         """Calculate pocket-ligand graph from iChem generated interaction pseudoatom map
 
         Returns
@@ -361,7 +359,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
         """
 
         # Create mol2 file from multimol2 filepath and pose_id
-        mol2_file_path = _get_IPA_map_filepath(self.multimol2_file_path, self.pose_id)
+        mol2_file_path = _get_IPA_map_filepath(multimol2_file_path, pose_id)
 
         # Extract interaction and atom info from mol2 file
         if mol2_file_path is not None:
@@ -402,7 +400,7 @@ class IPAMapFeaturizer(MolecularFeaturizer):
             
         except Exception as e:
             logger.error(
-                "Failed to create edge_index and edge_features for pose: %s" %self.pose_id 
+                "Failed to create edge_index and edge_features for pose: %s" % pose_id 
             )
             logger.error(
                 "Exception message: %s" % e
