@@ -3,6 +3,7 @@ Feature calculations.
 """
 import inspect
 import logging
+from pathlib import Path
 import numpy as np
 from typing import Any, Dict, Iterable, Optional, Tuple, Union, cast
 

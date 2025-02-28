@@ -351,11 +351,16 @@ class IPAMapFeaturizer(Featurizer):
     def _featurize(self, datapoint: (multimol2_file_path, pose_id), **kwargs) -> GraphData:
         """Calculate pocket-ligand graph from iChem generated interaction pseudoatom map
 
+        Parameters
+        ----------
+        datapoint: tuple
+            Datapoint must be tuple of (multimol2_file_path: Path, pose_id: str)
+            
         Returns
         -------
         graph: GraphData
             A molecule graph with some features - excluding edges between protein-ligand interaction
-
+        
         """
 
         # Create mol2 file from multimol2 filepath and pose_id
