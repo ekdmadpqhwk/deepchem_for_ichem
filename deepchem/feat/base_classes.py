@@ -523,3 +523,40 @@ class DummyFeaturizer(Featurizer):
             the datapoints.
         """
         return np.asarray(datapoints)
+
+class IChemFeaturizer(Featurizer):
+    """This is a featurizer for IChem IPA_map_featurizers. Data
+    """
+
+    def featurize(self,
+                  datapoints: Iterable[Any],
+                  log_every_n: int = 1000,
+                  **kwargs) -> np.ndarray:
+        """Calculate features for datapoints.
+
+        Parameters
+        ----------
+        datapoints: List of tuples
+            Datapoint must be tuple of (multimol2_file_path: Path, pose_id: str)
+        log_every_n: int, default 1000
+            Logs featurization progress every `log_every_n` steps.
+
+        Returns
+        -------
+        np.ndarray
+            A numpy array containing a featurized representation of `datapoints`.
+        """
+        
+        datapoints = [datapoints]
+        features = []
+        for i, point in enumerate(datapoints):
+            if i % log_every_n == 0:
+                logger.info("Featurizing datapoint %i" % i)
+            try:
+                features.append(self._featurize(point, **kwargs))
+            except:
+                logger.warning(
+                    "Failed to featurize datapoint %d. Appending empty array")
+                features.append(np.array([]))
+
+        return np.asarray(features)
