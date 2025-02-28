@@ -15,7 +15,7 @@ from deepchem.utils.ichem_feature_utils import get_int_atom_type_one_hot, get_at
 
 # Create a logger with date-time formatting
 logger = logging.getLogger('my_logger')
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.INFO)
 
 console_handler = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -115,7 +115,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
     
         # Check if the file is successfully created
         if mol2_file_path.exists():  
-            logger.info("")
+            logger.info("Mol2 file extracted.")
             return mol2_file_path
         else:
             return None
