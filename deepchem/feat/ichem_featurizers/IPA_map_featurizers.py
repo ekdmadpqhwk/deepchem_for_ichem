@@ -188,7 +188,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
                 "Failed to calculate distance matrix" 
             )
             logger.error(
-                "Exception message: %s" % e
+                "Exception message: %s", e
             )
             return None
             
@@ -228,7 +228,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
                 "Failed to prune nodes" 
             )
             logger.error(
-                "Exception message: %s" % e
+                "Exception message: %s", e
             )
             return None
             
@@ -364,7 +364,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         
         """
 
-        logger.info("Preparing to featurize datapoint: %s" % datapoint)
+        logger.info("Preparing to featurize datapoint: %s", datapoint)
         # Create mol2 file from multimol2 filepath and pose_id
         mol2_file_path = _get_IPA_map_filepath(datapoint[0], datapoint[1])
 
@@ -412,9 +412,9 @@ class IPAMapFeaturizer(IChemFeaturizer):
             
         except Exception as e:
             logger.error(
-                "Failed to create edge_index and edge_features for pose: %s" % datapoint[1] 
+                "Failed to create edge_index and edge_features for pose: %s", datapoint[1] 
             )
             logger.error(
-                "Exception message: %s" % e
+                "Exception message: %s", e
             )
             return None
