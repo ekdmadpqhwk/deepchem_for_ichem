@@ -324,7 +324,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         f_dest_idxs = dest_idxs + src_idxs # dest -> src
 
         # Calculate edge_features
-        edge_features = _construct_bond_features(mol, f_src_idxs, f_dest_idxs, dist_mat)
+        edge_features = self._construct_bond_features(mol, f_src_idxs, f_dest_idxs, dist_mat)
 
         # Modify edge_index by adjusting indices 
 
@@ -366,16 +366,16 @@ class IPAMapFeaturizer(IChemFeaturizer):
 
         logger.info("Preparing to featurize datapoint: %s", datapoint)
         # Create mol2 file from multimol2 filepath and pose_id
-        mol2_file_path = _get_IPA_map_filepath(datapoint[0], datapoint[1])
+        mol2_file_path = self._get_IPA_map_filepath(datapoint[0], datapoint[1])
 
         # Extract interaction and atom info from mol2 file
         if mol2_file_path is not None:
             if not self.use_BSA:
-                int_atom_idx, lig_dict, prot_dict, atom_info_dict = _parse_IPA_map(mol2_file_path)
+                int_atom_idx, lig_dict, prot_dict, atom_info_dict = self._parse_IPA_map(mol2_file_path)
                 bsa_lig_dict, bsa_prot_dict = None, None
 
             else:
-                int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict = _parse_IPA_map(mol2_file_path)
+                int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict = self._parse_IPA_map(mol2_file_path)
 
             # Delete the mol2 file in temp dir
             mol2_file_path.unlink()
@@ -385,15 +385,15 @@ class IPAMapFeaturizer(IChemFeaturizer):
             return None
 
         # Create rdkit mol object from interaction and atom info
-        rdkit_mol = _modify_rdkit_mol(int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict) 
+        rdkit_mol = self._modify_rdkit_mol(int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict) 
         
         # Create distance matrix between all atom pairs
-        dist_mat = _calculate_dist_between_atoms(rdkit_mol)
+        dist_mat = self._calculate_dist_between_atoms(rdkit_mol)
 
         if dist_mat is None:
             return None
         
-        idxs_to_keep = prune_nodes(dist_mat, lig_dict, prot_dict)
+        idxs_to_keep = self._prune_nodes(dist_mat, lig_dict, prot_dict)
 
         # Create node features for valid nodes
         if len(idxs_to_keep) != 0:
