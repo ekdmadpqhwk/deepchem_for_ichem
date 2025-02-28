@@ -348,7 +348,7 @@ class IPAMapFeaturizer(Featurizer):
         
         return edge_index, edge_features
 
-    def _featurize(self, datapoint: (multimol2_file_path, pose_id), **kwargs) -> GraphData:
+    def _featurize(self, datapoint, **kwargs) -> GraphData:
         """Calculate pocket-ligand graph from iChem generated interaction pseudoatom map
 
         Parameters
