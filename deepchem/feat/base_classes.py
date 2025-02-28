@@ -560,7 +560,7 @@ class IChemFeaturizer(Featurizer):
                 logger.info("Featurizing datapoint %i" % i)
             try:
                 features.append(self._featurize(point, **kwargs))
-            except as e:
+            except Exception as e:
                 logger.warning(
                     "Failed to featurize datapoint %s. Appending empty array" % i)
                 logger.error(
