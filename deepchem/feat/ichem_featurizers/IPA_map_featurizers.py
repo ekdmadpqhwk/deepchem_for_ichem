@@ -15,7 +15,7 @@ from deepchem.utils.ichem_feature_utils import get_int_atom_type_one_hot, get_at
 
 # Create a logger with date-time formatting
 logger = logging.getLogger('my_logger')
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.ERROR)
 
 console_handler = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -364,6 +364,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         
         """
 
+        logger.info("Preparing to featurize datapoint: %s" %s)
         # Create mol2 file from multimol2 filepath and pose_id
         mol2_file_path = _get_IPA_map_filepath(datapoint[0], datapoint[1])
 

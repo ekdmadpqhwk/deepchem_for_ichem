@@ -547,7 +547,13 @@ class IChemFeaturizer(Featurizer):
             A numpy array containing a featurized representation of `datapoints`.
         """
         
-        datapoints = [datapoints]
+        # Special case handling of single molecule
+        if isinstance(datapoints, tuple):
+            datapoints = [datapoints]
+        else:
+            # Convert iterables to list
+            datapoints = list(datapoints)
+            
         features = []
         for i, point in enumerate(datapoints):
             if i % log_every_n == 0:
@@ -556,7 +562,7 @@ class IChemFeaturizer(Featurizer):
                 features.append(self._featurize(point, **kwargs))
             except:
                 logger.warning(
-                    "Failed to featurize datapoint %d. Appending empty array")
+                    "Failed to featurize datapoint %s. Appending empty array" % i)
                 features.append(np.array([]))
 
         return np.asarray(features)
