@@ -364,7 +364,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         
         """
 
-        logger.info("Preparing to featurize datapoint: %s" %s)
+        logger.info("Preparing to featurize datapoint: %s" % datapoint)
         # Create mol2 file from multimol2 filepath and pose_id
         mol2_file_path = _get_IPA_map_filepath(datapoint[0], datapoint[1])
 
