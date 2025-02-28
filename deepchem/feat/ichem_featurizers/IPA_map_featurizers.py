@@ -154,10 +154,10 @@ class IPAMapFeaturizer(IChemFeaturizer):
             return int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict
     
     
-    def _modify_rdkit_mol(self, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict):
+    def _modify_rdkit_mol(self, mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict):
         ''' Modify rdkit mol object for ease of graph generation given interaction and atom information
         '''
-        rdkit_mol = modify_rdkit_mol(self.mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, 
+        rdkit_mol = modify_rdkit_mol(mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, 
                                     use_atom_symbols=self.use_atom_symbols, use_BSA=self.use_BSA, bsa_lig_dict=bsa_lig_dict, 
                                     bsa_prot_dict = bsa_prot_dict, use_pseudo=self.use_pseudo)
     
@@ -385,7 +385,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
             return None
 
         # Create rdkit mol object from interaction and atom info
-        rdkit_mol = self._modify_rdkit_mol(int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict) 
+        rdkit_mol = self._modify_rdkit_mol(mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict) 
         
         # Create distance matrix between all atom pairs
         dist_mat = self._calculate_dist_between_atoms(rdkit_mol)
