@@ -379,10 +379,10 @@ class IPAMapFeaturizer(IChemFeaturizer):
                 int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict = self._parse_IPA_map(mol2_file_path)
 
             # Delete the mol2 file in temp dir
-            mol2_file_path.unlink()
+            #mol2_file_path.unlink()
         else:
             # Delete the mol2 file in temp dir
-            mol2_file_path.unlink()
+            #mol2_file_path.unlink()
             return None
 
         # Create rdkit mol object from interaction and atom info
