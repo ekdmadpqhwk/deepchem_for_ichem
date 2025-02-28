@@ -302,7 +302,7 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
             sdf_file = Path(mol2_file_path).with_suffix('.sdf')
             
             # Open input MOL2 file
-            ifs = oechem.oemolistream(mol2_file_path)
+            ifs = oechem.oemolistream(str(mol2_file_path))
             ofs = oechem.oemolostream(str(sdf_file))
             
             # Read each molecule and write to SDF
