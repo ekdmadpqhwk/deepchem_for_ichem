@@ -46,7 +46,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
     This class requires RDKit to be installed.
     
     '''
-    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False):
+    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False, use_pseudo=False):
 
         """
         Parameters
@@ -73,6 +73,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         self.use_BSA = use_BSA
         self.use_center_atoms = use_center_atoms
         self.use_bond_type = use_bond_type
+        self.use_pseudo = use_pseudo
 
         self.INT_SYMBOLS = ['CA', 'CZ', 'O', 'OG', 'N', 'OD1', 'NZ', 'ZN']
         
