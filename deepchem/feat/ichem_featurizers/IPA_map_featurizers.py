@@ -184,7 +184,7 @@ class IPAMapFeaturizer(Featurizer):
             
         except Exception as e:
             logger.error(
-                "Failed to calculate distance matrix for pose: %s" % pose_id 
+                "Failed to calculate distance matrix" 
             )
             logger.error(
                 "Exception message: %s" % e
@@ -224,7 +224,7 @@ class IPAMapFeaturizer(Featurizer):
             
         except Exception as e:
             logger.error(
-                "Failed to prune nodes for pose: %s" % pose_id 
+                "Failed to prune nodes" 
             )
             logger.error(
                 "Exception message: %s" % e
@@ -359,7 +359,7 @@ class IPAMapFeaturizer(Featurizer):
         """
 
         # Create mol2 file from multimol2 filepath and pose_id
-        mol2_file_path = _get_IPA_map_filepath(multimol2_file_path, pose_id)
+        mol2_file_path = _get_IPA_map_filepath(datapoint[0], datapoint[1])
 
         # Extract interaction and atom info from mol2 file
         if mol2_file_path is not None:
@@ -400,7 +400,7 @@ class IPAMapFeaturizer(Featurizer):
             
         except Exception as e:
             logger.error(
-                "Failed to create edge_index and edge_features for pose: %s" % pose_id 
+                "Failed to create edge_index and edge_features for pose: %s" % datapoint[1] 
             )
             logger.error(
                 "Exception message: %s" % e
