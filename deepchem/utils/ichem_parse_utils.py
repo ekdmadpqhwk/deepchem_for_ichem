@@ -316,7 +316,7 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
             mol = Chem.SDMolSupplier(str(sdf_file), sanitize=False)[0]
         except Exception as e:
             logger.error(
-                "Failed to convert mol2 or sdf into rdkit mol object" 
+                "Failed to convert mol2 into sdf file" 
             )
             logger.error(
                 "Exception message: %s" % e

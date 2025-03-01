@@ -161,7 +161,6 @@ class IPAMapFeaturizer(IChemFeaturizer):
         rdkit_mol = modify_rdkit_mol(mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, 
                                     use_atom_symbols=self.use_atom_symbols, use_BSA=self.use_BSA, bsa_lig_dict=bsa_lig_dict, 
                                     bsa_prot_dict = bsa_prot_dict, use_pseudo=self.use_pseudo)
-    
         return rdkit_mol
         
     def _calculate_dist_between_atoms(self, mol: RDKitMol) -> np.ndarray:
@@ -374,12 +373,13 @@ class IPAMapFeaturizer(IChemFeaturizer):
             if not self.use_BSA:
                 int_atom_idx, lig_dict, prot_dict, atom_info_dict = self._parse_IPA_map(mol2_file_path)
                 bsa_lig_dict, bsa_prot_dict = None, None
+                print("int_atom_idx: ", int_atom_idx)
+                print("lig_dict, prot_dict: ", lig_dict, prot_dict)
+                print("atom_info_dict: ", atom_info_dict)
 
             else:
                 int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict = self._parse_IPA_map(mol2_file_path)
 
-            # Delete the mol2 file in temp dir
-            #mol2_file_path.unlink()
         else:
             # Delete the mol2 file in temp dir
             #mol2_file_path.unlink()
@@ -387,7 +387,16 @@ class IPAMapFeaturizer(IChemFeaturizer):
 
         # Create rdkit mol object from interaction and atom info
         rdkit_mol = self._modify_rdkit_mol(mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict) 
+
+        # Delete the mol2 file in temp dir
+        #mol2_file_path.unlink()
         
+        if rdkit_mol is None:
+
+            # Delete the mol2 file in temp dir
+            #mol2_file_path.unlink()
+            return None
+            
         # Create distance matrix between all atom pairs
         dist_mat = self._calculate_dist_between_atoms(rdkit_mol)
 
