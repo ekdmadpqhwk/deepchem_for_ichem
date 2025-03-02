@@ -201,7 +201,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
             valid_nodes: list
                 list of node indexes that are valid (less than 6A between P-L)
         '''
-
+        
         try:
             # Extract lig and prot indices from dictionaries
             lig_idxs = tuple(lig_dict.keys())
@@ -211,15 +211,15 @@ class IPAMapFeaturizer(IChemFeaturizer):
             lig_idxs_to_keep = []
             prot_idxs_to_keep = []
     
-            # Loop over distances and append indices to keep
+            # Loop over L-P distances and append indices to keep
             for l in lig_idxs:
                 for p in prot_idxs:
-                    if dist_mat[l][p] < 6:
+                    if dist_mat[l - 1][p - 1] < 6:
                         lig_idxs_to_keep.append(l)
                         prot_idxs_to_keep.append(p)
     
             idxs_to_keep = lig_idxs_to_keep + prot_idxs_to_keep
-
+    
             # Sort it lowest to highest index and keep only unique
             return sorted(set(idxs_to_keep)) 
             
@@ -269,16 +269,16 @@ class IPAMapFeaturizer(IChemFeaturizer):
     def _construct_bond_features(self, src_idxs, dest_idxs, dist_mat):
         ''' Construct bond features given source and destination indices
         '''
-
+        
         # Initialize feature numpy array
         bond_feat = []
-
+    
         if not self.use_bond_type:
-            for s in src_idxs:
-                for d in dest_idxs:
-                    bond_feat.append(dist_mat[s][d])
-
-            return  np.expand_dims(bond_feat, axis=1)
+            for i, j in list(zip(src_idxs, dest_idxs)):
+                i, j = int(i), int(j)
+                bond_feat.append(dist_mat[i - 1][j - 1])
+    
+            return np.expand_dims(bond_feat, axis=1)
             
         else:
             # Unimplented
@@ -297,24 +297,24 @@ class IPAMapFeaturizer(IChemFeaturizer):
         # Extract lig and prot indices from dictionaries
         lig_idxs = tuple(lig_dict.keys())
         prot_idxs = tuple(prot_dict.keys())
-
+    
         # Loop over ligand distances
         for l1 in lig_idxs:
             for l2 in lig_idxs:
-                if (dist_mat[l1][l2] < self.cutoff) & (l1 in idxs_to_keep) & (l2 in idxs_to_keep):
+                if (0 < dist_mat[l1 - 1][l2 - 1] < self.cutoff) & (l1 in idxs_to_keep) & (l2 in idxs_to_keep) & (l1 != l2):
                     src_idxs.append(l1)
-                    dest_idxs.append(l2) 
+                    dest_idxs.append(l2)  
 
         # Loop over protein distances
         for p1 in prot_idxs:
             for p2 in prot_idxs:
-                if (dist_mat[p1][p2] < self.cutoff) & (p1 in idxs_to_keep) & (p2 in idxs_to_keep):
+                if (0 < dist_mat[p1 - 1][p2 - 1] < self.cutoff) & (p1 in idxs_to_keep) & (p2 in idxs_to_keep) & (p1 != p2):
                     src_idxs.append(p1)
                     dest_idxs.append(p2) 
                     
         # Calculate interaction edges (L-P)
         for i, lig_idx, _, prot_idx, _ in int_atom_idx:
-            if (lig_idx in idxs_to_keep) & (prot_idx in idxs_to_keep):
+            if (dist_mat[int(lig_idx) - 1][int(prot_idx) - 1] < 6) & (int(lig_idx) in idxs_to_keep) & (int(prot_idx) in idxs_to_keep):
                 src_idxs.append(lig_idx)
                 dest_idxs.append(prot_idx)
         
@@ -324,7 +324,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         f_dest_idxs = dest_idxs + src_idxs # dest -> src
 
         # Calculate edge_features
-        edge_features = self._construct_bond_features(mol, f_src_idxs, f_dest_idxs, dist_mat)
+        edge_features = self._construct_bond_features(f_src_idxs, f_dest_idxs, dist_mat)
 
         # Modify edge_index by adjusting indices 
 
@@ -373,10 +373,6 @@ class IPAMapFeaturizer(IChemFeaturizer):
             if not self.use_BSA:
                 int_atom_idx, lig_dict, prot_dict, atom_info_dict = self._parse_IPA_map(mol2_file_path)
                 bsa_lig_dict, bsa_prot_dict = None, None
-                print("int_atom_idx: ", int_atom_idx)
-                print("lig_dict, prot_dict: ", lig_dict, prot_dict)
-                print("atom_info_dict: ", atom_info_dict)
-
             else:
                 int_atom_idx, lig_dict, prot_dict, atom_info_dict, bsa_lig_dict, bsa_prot_dict = self._parse_IPA_map(mol2_file_path)
 

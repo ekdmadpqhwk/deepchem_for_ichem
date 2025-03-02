@@ -349,7 +349,6 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
                             elif residue[2] == 'P':
                                 new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", prot_dict.get(key, "NA")).group(0))
                         else:
-                            print("Atom symbols dictionary not provided.")
                             pass
     
                         # if using BSA, add it to BSA
@@ -359,7 +358,7 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
                             elif residue[2] == 'P':
                                 new_mol.GetAtomWithIdx(key - 1).SetProp("BSA", str(bsa_prot_dict.get(key, "0")))
                         elif (use_BSA) & (bsa_lig_dict is None):
-                            print("BSA dictionary not provided.")
+                            logger.info("BSA dictionary not provided.")
                             pass                     
                     else:
                         #error handling
@@ -385,7 +384,6 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
                             elif residue[2] == 'P':
                                 new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", prot_dict.get(key, "NA")).group(0))
                         else:
-                            print("Atom symbols dictionary not provided.")
                             pass
     
                         # if using BSA, add it to BSA
@@ -395,7 +393,7 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
                             elif residue[2] == 'P':
                                 new_mol.GetAtomWithIdx(key - 1).SetProp("BSA", str(bsa_prot_dict.get(key, "0")))
                         elif (use_BSA) & (bsa_lig_dict is None):
-                            print("BSA dictionary not provided.")
+                            logger.info("BSA dictionary not provided.")
                             pass                     
                     else:
                         #error handling
