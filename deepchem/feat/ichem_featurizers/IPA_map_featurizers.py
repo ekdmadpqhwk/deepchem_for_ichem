@@ -301,14 +301,14 @@ class IPAMapFeaturizer(IChemFeaturizer):
         # Loop over ligand distances
         for l1 in lig_idxs:
             for l2 in lig_idxs:
-                if (0 < dist_mat[l1 - 1][l2 - 1] < self.cutoff) & (l1 in idxs_to_keep) & (l2 in idxs_to_keep) & (l1 != l2):
+                if (0 < dist_mat[l1 - 1][l2 - 1] < self.edge_cutoff) & (l1 in idxs_to_keep) & (l2 in idxs_to_keep) & (l1 != l2):
                     src_idxs.append(l1)
                     dest_idxs.append(l2)  
 
         # Loop over protein distances
         for p1 in prot_idxs:
             for p2 in prot_idxs:
-                if (0 < dist_mat[p1 - 1][p2 - 1] < self.cutoff) & (p1 in idxs_to_keep) & (p2 in idxs_to_keep) & (p1 != p2):
+                if (0 < dist_mat[p1 - 1][p2 - 1] < self.edge_cutoff) & (p1 in idxs_to_keep) & (p2 in idxs_to_keep) & (p1 != p2):
                     src_idxs.append(p1)
                     dest_idxs.append(p2) 
                     
