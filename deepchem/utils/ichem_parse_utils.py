@@ -314,7 +314,17 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
             ofs.close()
 
             mol = Chem.SDMolSupplier(str(sdf_file), sanitize=False)[0]
+                
+            # Delete the files in temp dir
+            sdf_file_path.unlink()
+            mol2_file_path.unlink()
+            
         except Exception as e:
+            
+            # Delete the files in temp dir
+            sdf_file_path.unlink()
+            mol2_file_path.unlink()
+            
             logger.error(
                 "Failed to convert mol2 into sdf file" 
             )
@@ -325,6 +335,9 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
 
     if mol is not None:
 
+        # Delete the files in temp dir
+        mol2_file_path.unlink()  
+        
         # Create a new molecule without the atom to delete
         try:
             pose_id = str(mol2_file_path.name)
