@@ -367,6 +367,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         logger.info("Preparing to featurize datapoint: %s", datapoint)
         # Create mol2 file from multimol2 filepath and pose_id
         mol2_file_path = self._get_IPA_map_filepath(datapoint[0], datapoint[1])
+        sdf_file_path = Path(mol2_file_path).with_suffix('.sdf')
 
         # Extract interaction and atom info from mol2 file
         if mol2_file_path is not None:
@@ -381,8 +382,19 @@ class IPAMapFeaturizer(IChemFeaturizer):
 
         # Create rdkit mol object from interaction and atom info
         rdkit_mol = self._modify_rdkit_mol(mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, bsa_lig_dict, bsa_prot_dict) 
+
+        # Delete temp files
+        mol2_file_path.unlink()
+        if sdf_file_path.exists():
+            sdf_file_path.unlink()
         
         if rdkit_mol is None:
+
+            # Delete temp files
+            mol2_file_path.unlink()
+            if sdf_file_path.exists():
+                sdf_file_path.unlink()
+                
             return None
             
         # Create distance matrix between all atom pairs
