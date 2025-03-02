@@ -316,13 +316,11 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
             mol = Chem.SDMolSupplier(str(sdf_file), sanitize=False)[0]
                 
             # Delete the files in temp dir
-            sdf_file_path.unlink()
+            sdf_file.unlink()
             mol2_file_path.unlink()
             
         except Exception as e:
             
-            # Delete the files in temp dir
-            sdf_file_path.unlink()
             mol2_file_path.unlink()
             
             logger.error(
