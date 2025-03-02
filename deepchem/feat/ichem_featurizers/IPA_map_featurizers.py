@@ -404,7 +404,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         # Create node features for valid nodes
         if len(idxs_to_keep) != 0:
             node_features = np.asarray([
-                self._atom_featurizer(rdkit_mol.GetAtomWithIdx(i), rdkit_mol, i) for i in idxs_to_keep
+                self._atom_featurizer(rdkit_mol.GetAtomWithIdx(int(i)), rdkit_mol, i) for i in idxs_to_keep
             ], dtype=float)
         else:
             return None
