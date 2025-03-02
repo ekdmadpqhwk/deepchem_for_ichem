@@ -248,7 +248,7 @@ def extract_atom_info(file_path, lig_dict, prot_dict, use_BSA=False):
                 pass
                 
         if not use_BSA:
-            return atom_info_dict, None, None
+            return atom_info_dict
     
         else:
             
