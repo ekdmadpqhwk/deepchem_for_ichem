@@ -13,7 +13,7 @@ def get_int_atom_type_one_hot(mol: RDKitMol,
     """ Get an one-hot-encode of tripos atom types
     """
 
-    return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('_TriposAtomName'), allowable_set, include_unknown_set)
+    return one_hot_encode(mol.GetAtomWithIdx(int(idx)).GetProp('_TriposAtomName'), allowable_set, include_unknown_set)
 
 def get_atom_symbol_one_hot(mol: RDKitMol,
                                       idx: int,
@@ -22,13 +22,13 @@ def get_atom_symbol_one_hot(mol: RDKitMol,
     """ Get an one-hot-encode of tripos atom types
     """
 
-    return one_hot_encode(mol.GetAtomWithIdx(idx).GetProp('Atom_symbol'), allowable_set, include_unknown_set)
+    return one_hot_encode(mol.GetAtomWithIdx(int(idx)).GetProp('Atom_symbol'), allowable_set, include_unknown_set)
 
 def get_BSA(mol: RDKitMol, idx: int):
     """ Get an one-hot-encode of tripos atom types
     """
 
-    return mol.GetAtomWithIdx(idx).GetProp('BSA')
+    return mol.GetAtomWithIdx(int(idx)).GetProp('BSA')
     
 def get_node_type_one_hot(atom: RDKitAtom,
                           allowable_set: List[str],
