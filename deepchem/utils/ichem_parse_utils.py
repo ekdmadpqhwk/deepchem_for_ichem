@@ -339,24 +339,24 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
                         new_mol.RemoveAtom(key - 1 - delete_count)
                         delete_count += 1 # update to keep up with rearranged atom index
                     elif residue[2] == 'P' or residue[2] == 'L':
-                        new_mol.GetAtomWithIdx(key - 1).SetProp("Residue", residue)
-                        new_mol.GetAtomWithIdx(key - 1).SetProp("_TriposAtomName", int_atm_type)
+                        new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Residue", residue)
+                        new_mol.GetAtomWithIdx(int(key) - 1).SetProp("_TriposAtomName", int_atm_type)
     
                         # if using atom types, extract alphabetical part and store in Atype property
                         if use_atom_symbols:
                             if residue[2] == 'L':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", lig_dict.get(key, "NA")).group(0))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", lig_dict.get(key, "NA")).group(0))
                             elif residue[2] == 'P':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", prot_dict.get(key, "NA")).group(0))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", prot_dict.get(key, "NA")).group(0))
                         else:
                             pass
     
                         # if using BSA, add it to BSA
                         if (use_BSA) & (bsa_lig_dict is not None):
                             if residue[2] == 'L':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("BSA", str(bsa_lig_dict.get(key, "0")))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("BSA", str(bsa_lig_dict.get(key, "0")))
                             elif residue[2] == 'P':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("BSA", str(bsa_prot_dict.get(key, "0")))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("BSA", str(bsa_prot_dict.get(key, "0")))
                         elif (use_BSA) & (bsa_lig_dict is None):
                             logger.info("BSA dictionary not provided.")
                             pass                     
@@ -371,27 +371,27 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
             else:
                 for key, (residue, int_atm_type) in atom_info_dict.items():
                     if residue[2] == 'C':
-                        new_mol.GetAtomWithIdx(key - 1).SetProp("Residue", residue)
-                        new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", "PSEUDO")                    
+                        new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Residue", residue)
+                        new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Atom_symbol", "PSEUDO")                    
                     elif residue[2] == 'P' or residue[2] == 'L':
-                        new_mol.GetAtomWithIdx(key - 1).SetProp("Residue", residue)
-                        new_mol.GetAtomWithIdx(key - 1).SetProp("_TriposAtomName", int_atm_type)
+                        new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Residue", residue)
+                        new_mol.GetAtomWithIdx(int(key) - 1).SetProp("_TriposAtomName", int_atm_type)
     
                         # if using atom types, extract alphabetical part and store in Atype property
                         if use_atom_symbols:
                             if residue[2] == 'L':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", lig_dict.get(key, "NA")).group(0))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", lig_dict.get(key, "NA")).group(0))
                             elif residue[2] == 'P':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", prot_dict.get(key, "NA")).group(0))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("Atom_symbol", re.match(r"[A-Za-z]+", prot_dict.get(key, "NA")).group(0))
                         else:
                             pass
     
                         # if using BSA, add it to BSA
                         if (use_BSA) & (bsa_lig_dict is not None):
                             if residue[2] == 'L':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("BSA", str(bsa_lig_dict.get(key, "0")))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("BSA", str(bsa_lig_dict.get(key, "0")))
                             elif residue[2] == 'P':
-                                new_mol.GetAtomWithIdx(key - 1).SetProp("BSA", str(bsa_prot_dict.get(key, "0")))
+                                new_mol.GetAtomWithIdx(int(key) - 1).SetProp("BSA", str(bsa_prot_dict.get(key, "0")))
                         elif (use_BSA) & (bsa_lig_dict is None):
                             logger.info("BSA dictionary not provided.")
                             pass                     
