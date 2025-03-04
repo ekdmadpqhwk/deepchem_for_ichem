@@ -46,7 +46,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
     This class requires RDKit to be installed.
     
     '''
-    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False, use_pseudo=False):
+    def __init__(self, edge_cutoff=4, use_atom_symbols=False, use_BSA=False, use_center_atoms=False, use_bond_type=False):
 
         """
         Parameters
@@ -73,7 +73,6 @@ class IPAMapFeaturizer(IChemFeaturizer):
         self.use_BSA = use_BSA
         self.use_center_atoms = use_center_atoms
         self.use_bond_type = use_bond_type
-        self.use_pseudo = use_pseudo
 
         self.INT_SYMBOLS = ['CA', 'CZ', 'O', 'OG', 'N', 'OD1', 'NZ', 'ZN']
         
@@ -160,7 +159,7 @@ class IPAMapFeaturizer(IChemFeaturizer):
         '''
         rdkit_mol = modify_rdkit_mol(mol2_file_path, int_atom_idx, atom_info_dict, lig_dict, prot_dict, 
                                     use_atom_symbols=self.use_atom_symbols, use_BSA=self.use_BSA, bsa_lig_dict=bsa_lig_dict, 
-                                    bsa_prot_dict = bsa_prot_dict, use_pseudo=self.use_pseudo)
+                                    bsa_prot_dict = bsa_prot_dict, use_center_atoms=self.use_center_atoms)
         return rdkit_mol
         
     def _calculate_dist_between_atoms(self, mol: RDKitMol) -> np.ndarray:

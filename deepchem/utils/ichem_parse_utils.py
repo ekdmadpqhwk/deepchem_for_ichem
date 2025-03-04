@@ -289,7 +289,9 @@ def extract_atom_info(file_path, lig_dict, prot_dict, use_BSA=False):
         else:
             return None, None, None
         
-def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot_dict, use_atom_symbols=False, use_BSA=False, bsa_lig_dict=None, bsa_prot_dict = None, use_pseudo=False):
+def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot_dict, use_atom_symbols=False, 
+                     use_BSA=False, bsa_lig_dict=None, bsa_prot_dict = None,  use_center_atoms=False):
+    
     # Read the .mol2 file
     mol = Chem.MolFromMol2File(str(mol2_file_path))
 
@@ -334,7 +336,7 @@ def modify_rdkit_mol(mol2_file_path, int_atm_idx, atom_info_dict, lig_dict, prot
             new_mol = Chem.RWMol(mol)  # Convert to editable molecule
     
             # If not using pseudoatoms, delete "C" residue atoms
-            if not use_pseudo:
+            if not use_center_atoms:
                 delete_count = 0
                 for key, (residue, int_atm_type) in atom_info_dict.items():
                     if residue[2] == 'C':
